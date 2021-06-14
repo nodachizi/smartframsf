@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import CustomerListResults from 'src/components/customer/CustomerListResults';
-import CustomerListToolbar from 'src/components/customer/CustomerListToolbar';
+import Timeresult from 'src/components/Waterpump mode/Timeresult';
+import CustomerListToolbar from 'src/components/Waterpump mode/CustomerListToolbar';
 import customers from 'src/__mocks__/customers';
 
 const CustomerList = () => (
@@ -19,7 +19,7 @@ const CustomerList = () => (
       <Container maxWidth={false}>
         <CustomerListToolbar />
         <Box sx={{ pt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <Timeresult customers={customers} />
         </Box>
       </Container>
     </Box>

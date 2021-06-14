@@ -13,11 +13,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
 
-const CustomerListResults = ({ customers, ...rest }) => {
+const Timeresult = ({ session, setSession }) => {
  /*const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -63,7 +64,7 @@ const CustomerListResults = ({ customers, ...rest }) => {
   };*/
 
   return (
-    <Card {...rest}>
+    <Card >
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>
@@ -96,8 +97,8 @@ const CustomerListResults = ({ customers, ...rest }) => {
   );
 };
 
-CustomerListResults.propTypes = {
+Timeresult.propTypes = {
   customers: PropTypes.array.isRequired
 };
 
-export default CustomerListResults;
+export default Timeresult;

@@ -39,7 +39,7 @@ const items = [
     title: 'แสดงค่าตรวจวัด'
   },
   {
-    href: '/app/customers',
+    href: '/app/waterpump',
     icon: Alarm ,
     title: 'ตั้งค่าการรดน้ำ'
   },
