@@ -1,104 +1,105 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
+  CardContent,
+  TextField,
+  InputAdornment,
+  SvgIcon,
+  AppBar,
   Typography,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Dialog,
+  Slide,
+  makeStyles,
+  Toolbar,
+  IconButton,
+  Autocomplete,
+  Grid, 
+  MenuItem,
+  InputLabel,
+  Select,
+  Container
   
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
+import typography from 'src/theme/typography';
+import Minerals from 'src/components/dashboard/Minerals';
+import { Padding } from '@material-ui/icons';
+import theme from 'src/theme';
 
-const Timeresult = ({ session, setSession }) => {
- /*const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
 
-  const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+export default function Timeresult () {
+  var i=1;
+  var j=3;
+  const item=[];
 
-    if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
-    } else {
-      newSelectedCustomerIds = [];
-    }
+  
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
-
-    if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
-
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };*/
-
-  return (
-    <Card >
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    
-                  />
-                </TableCell>
-                <TableCell>
-                  ชื่อ
-                </TableCell>
-                <TableCell>
-                  เวลาทำงาน
-                </TableCell>
-                <TableCell>
-                  เวลาตั้งค่า
-                </TableCell>
-              </TableRow>
-            </TableHead>
-             <TableBody>
-              
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
+  for(i;i<j;i++){
+    item.push(
       
-    </Card>
-  );
-};
+      <Box
+      sx={{
+        backgroundColor: 'background.default',
+        minHeight: '100%',
+        py: 3
+        
+      }}
+    >
+      <Container maxWidth={false}>
+         
+        <Grid
+          container
+          spacing={3}
+        >
+         
+         <Grid
+                  item
+                  lg={2}
+                  sm={6}
+                  xl={3}
+                  xs={12}
+                >
+                
+                 
+                </Grid>
+          
+          <Grid
+            item
+            lg={8}
+            md={12}
+            xl={9}
+            xs={12}
+            
+          >
+            <Grid spacing={3}>
+           
+            </Grid>
+            <Minerals sx={{ height: '100%' }} />
+          </Grid>
+          
+          
+          
+        </Grid>
+      </Container>
+    </Box>
+    )
+  }
 
-Timeresult.propTypes = {
-  customers: PropTypes.array.isRequired
-};
+  
+  return(
+   
+    <List >{item}</List>
+  )
+}
 
-export default Timeresult;
+
+
