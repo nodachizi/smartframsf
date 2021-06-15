@@ -34,13 +34,20 @@ import typography from 'src/theme/typography';
 import Minerals from 'src/components/dashboard/Minerals';
 import { Padding } from '@material-ui/icons';
 import theme from 'src/theme';
+import CustomerList from 'src/components/Waterpump mode/CustomerListToolbar';
 
 
 export default function Timeresult () {
   var i=1;
   var j=3;
   const item=[];
+  const [unit,setUnit]=useState({
+    i: 1,
+    j: 2,
+    mode: 'ทำงานในโหมด Auto',
 
+
+  })
   
 
   for(i;i<j;i++){
@@ -63,10 +70,7 @@ export default function Timeresult () {
          
          <Grid
                   item
-                  lg={2}
-                  sm={6}
-                  xl={3}
-                  xs={12}
+                 xs={2}
                 >
                 
                  
@@ -74,16 +78,12 @@ export default function Timeresult () {
           
           <Grid
             item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-            
+            xs={8}
           >
             <Grid spacing={3}>
            
             </Grid>
-            <Minerals sx={{ height: '100%' }} />
+            <CustomerList sx={{ height: '100%' }} unit={unit} setUnit={setUnit} />
           </Grid>
           
           

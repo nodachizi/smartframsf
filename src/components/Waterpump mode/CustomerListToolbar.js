@@ -21,7 +21,14 @@ import {
   Grid, 
   MenuItem,
   InputLabel,
-  Select
+  Select,
+  CardHeader,
+  Switch,
+  FormGroup,
+  FormControlLabel,
+  Slider,
+
+  
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Search as SearchIcon } from 'react-feather';
@@ -42,130 +49,321 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 300,
     flex: 1,
   },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
 
 }));
 
-const timeSlots = Array.from(new Array(24 * 2)).map(
-  (_, index) => `${index < 20 ? '0' : ''}${Math.floor(index / 2)}:${index % 2 === 0 ? '00' : '30'}`,
-);
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 
- export default function CustomerListToolbar ()  {
+
+ export default function CustomerListToolbar ({unit,setUnit})  {
   
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+
+  const [state, setState] = React.useState({
+    checkedA: false,
+    checkedB: false,
+    
+  });
+  
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked ,
+      checkedB: false,
+      checkedC: false
+
+    });
+    if(session.onoff == "disable"){
+      setSession({
+       onoff:"enable",
+        Auto:"disable"
+    
+    }
+     )
+   
+    }
+    if(session.onoff == "enable"){
+
+      setSession({
+       onoff:"disable",
+        Auto: "disable"
+    })
+   
+    }
+    
+   
+  };
+
+  const handleChange1 = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked ,
+      checkedA:false,
+      checkedC:false
+    });
+    if(session.Auto == "disable"){
+      setSession({
+        Auto:"enable",
+        Timer:"enable",
+        onoff: "disable",
+      })
+    }
+    if(session.Auto == "enable"){
+      setSession({
+        Auto:"disable",
+        Timer:"enable",
+        onoff: "disable",
+      })
+    }
+    
+   
+  };
+  
+  const handleChange2 = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked ,
+      checkedA:false,
+      checkedB:false
+    });
+    if(session.Timer == "disable"){
+      setSession({
+        Timer:"enable",
+        Timer:"enable",
+        onoff: "disable",
+      })
+    }
+    if(session.Timer == "enable"){
+      setSession({
+        Timer:"disable",
+        onoff: "disable",
+        Auto:"disable"
+      })
+    }
+    
+   
+  };
+ 
   //todo ตัวเก็บค่าไปทำการแสดง
   const [session,setSession]= React.useState({
    mode: null,
    Time: null,  
    name: null, 
-   Auto: null,
+   
+  onoff:"disable",
+   Auto:"disable",
+   Timer:"disable"
+   
   });
+
+  function valuetext(value) {
+    return `${value}°C`;
+  }
+  
+  
  
-  const [age, setAge] = React.useState('');
+  const name =`relaynumber${unit.i}`
+ 
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  
       //todo เลือกโหมดการทำงาน
-  const handleChange = (event) => { 
-    setAge(event.target.value)
-    if(age==10){
-      setSession({
-        mode: "Auto"
+    if(session.k == "enable"){
+      return(
+        <Card>
+        <CardHeader title= {name}/>
+        <Divider/>
+        <CardContent>
+            <Box
+             sx={{
+              
+              position: 'relative'
+            }}
+            >
+                 <FormGroup >
+                 <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Off</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                           </Grid>
+                        <Grid item>On</Grid>
+                    </Grid>
+                    </Typography>
+                    <Typography component="div" >
+                      <Grid  container alignItems="center" spacing={1} >
+                          <Grid item>Op</Grid>
+                          <Grid item >
+                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                           </Grid>
+                        <Grid item>Op</Grid>
+                        <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   
+                                />
+                    </Grid>
+                    </Typography>
 
-    })
+                              <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   
+                                />
+                </FormGroup>
+            </Box>
+        </CardContent>
+      </Card>
+      )
     }
     
-  
-  };
-    
+   if(session.Auto == "enable"){
     return(
-      <Box >
-         <Box
+      <Card>
+      <CardHeader title= {name}/>
+      <Divider/>
+      <CardContent>
+          <Box
            sx={{
-           display: 'flex',
-           justifyContent: 'flex-end'
-           
-        }}
-    >
-      
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={handleClickOpen}
-      >
-         เลือก Mode
-       </Button>
-       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              โหมดปั้มน้ำ
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>  //! ไม่สำคัญ
-            <ListItemText primary="sds" secondary="" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="" secondary="" />
-          </ListItem>
-          <Grid container spacing={3} paddingLeft={5} >
-          <Grid item xs={12} className={classes.formControl}>
-          <InputLabel id="modee">Mode</InputLabel>
-             <Select
-                 labelId="โหมดการทำงาน"
-                  id="modee"
-                  value={age}
-                  onChange={handleChange}
-                  
-              >
-                  <MenuItem value={10} >Auto/ทำงานอัตโนมัติ</MenuItem>
-                  <MenuItem value={20} >Timer/ตั้งเวลา</MenuItem>
-              </Select>
-            </Grid>
+            
+            position: 'relative'
+          }}
+          >
+               <FormGroup >
+               <Typography component="div" >
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>Off</Grid>
+                        <Grid item>
+                        <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                         </Grid>
+                      <Grid item>On</Grid>
+                  </Grid>
+                  </Typography>
+                  <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Op</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                           </Grid>
+                        <Grid item>Op</Grid>
+                    </Grid>
+                    </Typography>
+                            <Slider
+                                 defaultValue={30}
+                                 getAriaValueText={valuetext}
+                                 aria-labelledby="discrete-slider"
+                                 valueLabelDisplay="auto"
+                                 step={10}
+                                 marks
+                                 min={10}
+                                 max={110}
+                                 disabled
+                              />
+                              <Slider
+                                 defaultValue={30}
+                                 getAriaValueText={valuetext}
+                                 aria-labelledby="discrete-slider"
+                                 valueLabelDisplay="auto"
+                                 step={10}
+                                 marks
+                                 min={10}
+                                 max={110}
+                                
+                              />
+              </FormGroup>
+          </Box>
+      </CardContent>
+    </Card>
+    )
+   }
+   else 
+      return(
+        <Card>
+        <CardHeader title= {name}/>
+        <Divider/>
+        <CardContent>
+            <Box
+             sx={{
+              
              
-            <Grid item xs={12} paddingLeft={2}>
-              <TextField id="name" label="ชื่อ" variant="outlined"/>
-            </Grid>
-            <Grid item >
-            <Autocomplete                //todo ตัวตังเวลา
-            id="disabled-options-demo"
-              options={timeSlots}
-              getOptionDisabled={(option) => option === timeSlots[0] || option === timeSlots[2]}
-              style={{ width: 300 }}
-              renderInput={(params) => (
-            <TextField {...params} label="ตั้งเวลา" variant="outlined" />
-               )}
-          />
-            </Grid>
-          
-          </Grid>
-          
-        </List>
-      </Dialog>
-      </Box>
-    
-    </Box>
-     
-  )
+            }}
+            >
+                 <FormGroup >
+                 <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Off</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                           </Grid>
+                        <Grid item>On</Grid>
+                       
+                            <Grid item>
+                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                             </Grid>
+                          <Grid item>Auto</Grid>
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                           
+                    </Grid>
+                    </Typography>
+                   
+                              <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   disabled
+                                />
+                                <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   disabled
+                                />
+
+                                <TextField
+                                        disabled
+                                        id="time"
+                                        label="ตั้งเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                </FormGroup>
+                
+            </Box>
+           
+        </CardContent>
+      </Card>
+   )
+      
   
  };
 
