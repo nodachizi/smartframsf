@@ -1,7 +1,5 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import {
   Box,
   Button,
@@ -10,17 +8,59 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  FormControl,
+  makeStyles,
+  createStyles
 } from '@material-ui/core';
+import React from 'react';
+import { functions } from 'lodash-es';
+import { BorderColor } from '@material-ui/icons';
 
-const Register = () => {
-  const navigate = useNavigate();
+function  isUserRequired(val) {
+  return val.length > 0 ? '' : 'User cannot be blank'
+ 
+}
 
+function  isPassRequired(val) {
+  return val.length > 0 ? '' : 'Password cannot be blank'
+  
+}
+
+const useStyles = makeStyles(() => createStyles({
+  root: {
+    color : 'red',
+    BorderColor: 'red',
+    fontFamily: 'roboto'
+  },
+}));
+
+export default function Register() {
+    const classes = useStyles();
+  
+    const [value,setValue]=React.useState({
+      Username: null ,
+      Password: null,
+    });
+    const [errors,setErrors]=React.useState([]);
+    const [perrors,setPErrors]=React.useState([]);
+
+    function validateU(validations){
+    
+      setErrors(validations.map(errorsFor => errorsFor(value)) )
+         
+          
+    }
+  
+    function validateP(validations){
+
+      setPErrors(validations.map(errorsFor => errorsFor(value)) )  
+      
+    }
+   
   return (
-    <>
-      <Helmet>
-        <title>Register | Material Kit</title>
-      </Helmet>
+    
+      
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -28,139 +68,59 @@ const Register = () => {
           flexDirection: 'column',
           height: '100%',
           justifyContent: 'center'
+          
         }}
+        
       >
         <Container maxWidth="sm">
-          <Formik
-            initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: '',
-              policy: false
-            }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('User name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                Confirmpassword: Yup.string().max(255).required('Confirm password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
-              })
-            }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Create new account
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Use your email to create new account
-                  </Typography>
-                </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="Username"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.password}
-                  variant="outlined"
-                />
-               
-                <TextField
-                  error={Boolean(touched.Confirmpassword && errors.Confirmpassword)}
-                  fullWidth
-                  helperText={touched.Confirmpassword && errors.Confirmpassword}
-                  label="Confirmpassword"
-                  margin="normal"
-                  name="Confirmpassword"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="Confirmpassword"
-                  value={values.Confirmpassword}
-                  variant="outlined"
-                />
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    ml: -1
-                  }}
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
                 >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
-                )}
-                <Box sx={{ py: 2 }}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Sign up now
-                  </Button>
-                </Box>
+                  Username
+                </Typography>
+                <TextField 
+                
+                label="" 
+                value={value.Username} 
+                onChange={e => setValue(e.target.value)}  
+                onBlur={() => {
+                  validateU([isUserRequired])
+                }}
+                fullWidth
+                margin="normal"
+                />
+                {errors.length > 0
+                  ? (<div className={classes.root}>{errors.join(", ")}</div>
+                  ) : null
+                   
+                   }
+
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                >
+                  Paswword
+                </Typography>
+                <TextField 
+                
+                value={value.Password} 
+                onChange={e => setValue(e.target.value)}  
+                onBlur={() => {
+                  validateP([isPassRequired])
+                }}
+                fullWidth
+                margin="normal"
+                />
+                {errors.length > 0
+                  ? (<div className={classes.root}>{perrors.join(",")}</div>
+                  ) : null
+                   
+                   }
+                
+                
+                  
+               
                 <Typography
                   color="textSecondary"
                   variant="body1"
@@ -175,13 +135,10 @@ const Register = () => {
                     Sign in
                   </Link>
                 </Typography>
-              </form>
-            )}
-          </Formik>
         </Container>
       </Box>
-    </>
-  );
+    
+  )
 };
 
-export default Register;
+
