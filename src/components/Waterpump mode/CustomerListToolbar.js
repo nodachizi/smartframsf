@@ -63,13 +63,14 @@ const useStyles = makeStyles((theme) => ({
  export default function CustomerListToolbar ({unit,setUnit})  {
   
   const classes = useStyles();
-
+   //todo ตั่้งค่าปุ่มสวิช
   const [state, setState] = React.useState({
     checkedA: false,
     checkedB: false,
+    checkedC: false,
     
   });
-  
+   //todo sw on/off
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked ,
       checkedB: false,
@@ -96,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     
    
   };
-
+  //todo sw Auto
   const handleChange1 = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked ,
       checkedA:false,
@@ -105,21 +106,21 @@ const useStyles = makeStyles((theme) => ({
     if(session.Auto == "disable"){
       setSession({
         Auto:"enable",
-        Timer:"enable",
+        Timer:"disable",
         onoff: "disable",
       })
     }
     if(session.Auto == "enable"){
       setSession({
         Auto:"disable",
-        Timer:"enable",
+        Timer:"disable",
         onoff: "disable",
       })
     }
     
    
   };
-  
+  // todo Timer
   const handleChange2 = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked ,
       checkedA:false,
@@ -128,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
     if(session.Timer == "disable"){
       setSession({
         Timer:"enable",
-        Timer:"enable",
+        Auto:"disable",
         onoff: "disable",
       })
     }
@@ -166,127 +167,7 @@ const useStyles = makeStyles((theme) => ({
 
   
       //todo เลือกโหมดการทำงาน
-    if(session.k == "enable"){
-      return(
-        <Card>
-        <CardHeader title= {name}/>
-        <Divider/>
-        <CardContent>
-            <Box
-             sx={{
-              
-              position: 'relative'
-            }}
-            >
-                 <FormGroup >
-                 <Typography component="div" >
-                      <Grid component="label" container alignItems="center" spacing={1}>
-                          <Grid item>Off</Grid>
-                          <Grid item>
-                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
-                           </Grid>
-                        <Grid item>On</Grid>
-                    </Grid>
-                    </Typography>
-                    <Typography component="div" >
-                      <Grid  container alignItems="center" spacing={1} >
-                          <Grid item>Op</Grid>
-                          <Grid item >
-                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
-                           </Grid>
-                        <Grid item>Op</Grid>
-                        <Slider
-                                   defaultValue={30}
-                                   getAriaValueText={valuetext}
-                                   aria-labelledby="discrete-slider"
-                                   valueLabelDisplay="auto"
-                                   step={10}
-                                   marks
-                                   min={10}
-                                   max={110}
-                                   
-                                />
-                    </Grid>
-                    </Typography>
-
-                              <Slider
-                                   defaultValue={30}
-                                   getAriaValueText={valuetext}
-                                   aria-labelledby="discrete-slider"
-                                   valueLabelDisplay="auto"
-                                   step={10}
-                                   marks
-                                   min={10}
-                                   max={110}
-                                   
-                                />
-                </FormGroup>
-            </Box>
-        </CardContent>
-      </Card>
-      )
-    }
-    
-   if(session.Auto == "enable"){
-    return(
-      <Card>
-      <CardHeader title= {name}/>
-      <Divider/>
-      <CardContent>
-          <Box
-           sx={{
-            
-            position: 'relative'
-          }}
-          >
-               <FormGroup >
-               <Typography component="div" >
-                    <Grid component="label" container alignItems="center" spacing={1}>
-                        <Grid item>Off</Grid>
-                        <Grid item>
-                        <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
-                         </Grid>
-                      <Grid item>On</Grid>
-                  </Grid>
-                  </Typography>
-                  <Typography component="div" >
-                      <Grid component="label" container alignItems="center" spacing={1}>
-                          <Grid item>Op</Grid>
-                          <Grid item>
-                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
-                           </Grid>
-                        <Grid item>Op</Grid>
-                    </Grid>
-                    </Typography>
-                            <Slider
-                                 defaultValue={30}
-                                 getAriaValueText={valuetext}
-                                 aria-labelledby="discrete-slider"
-                                 valueLabelDisplay="auto"
-                                 step={10}
-                                 marks
-                                 min={10}
-                                 max={110}
-                                 disabled
-                              />
-                              <Slider
-                                 defaultValue={30}
-                                 getAriaValueText={valuetext}
-                                 aria-labelledby="discrete-slider"
-                                 valueLabelDisplay="auto"
-                                 step={10}
-                                 marks
-                                 min={10}
-                                 max={110}
-                                
-                              />
-              </FormGroup>
-          </Box>
-      </CardContent>
-    </Card>
-    )
-   }
-   else 
+    if(session.onoff == "enable"){ //todo ถ้ากด sw on/off แสดงหน้านี้
       return(
         <Card>
         <CardHeader title= {name}/>
@@ -318,7 +199,9 @@ const useStyles = makeStyles((theme) => ({
                            
                     </Grid>
                     </Typography>
-                   
+                          <Typography>
+                            ตั้งค่าความชื้นใน Mode Auto
+                          </Typography>
                               <Slider
                                    defaultValue={30}
                                    getAriaValueText={valuetext}
@@ -330,7 +213,135 @@ const useStyles = makeStyles((theme) => ({
                                    max={110}
                                    disabled
                                 />
-                                <Slider
+                               
+                                <TextField
+                                        disabled
+                                        id="time"
+                                        label="ตั้งเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                </FormGroup>
+                
+            </Box>
+           
+        </CardContent>
+      </Card>
+      )
+    }
+    
+   if(session.Auto == "enable"){ //todo ถ้ากด sw auto แสดงหน้านี้
+    return(
+      <Card>
+        <CardHeader title= {name}/>
+        <Divider/>
+        <CardContent>
+            <Box
+             sx={{
+              
+             
+            }}
+            >
+                 <FormGroup >
+                 <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Off</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                           </Grid>
+                        <Grid item>On</Grid>
+                       
+                            <Grid item>
+                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                             </Grid>
+                          <Grid item>Auto</Grid>
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                           
+                    </Grid>
+                    </Typography>
+                          <Typography>
+                            ตั้งค่าความชื้นใน Mode Auto
+                          </Typography>
+                              <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   
+                                />
+                               
+                                <TextField
+                                        disabled
+                                        id="time"
+                                        label="ตั้งเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                </FormGroup>
+                
+            </Box>
+           
+        </CardContent>
+      </Card>
+    )
+   }
+   if(session.Timer == "enable"){ //todo ถ้ากด sw ตั้งเวลาจะทำงาน
+    return(
+      <Card>
+        <CardHeader title= {name}/>
+        <Divider/>
+        <CardContent>
+            <Box
+             sx={{
+              
+             
+            }}
+            >
+                 <FormGroup >
+                 <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Off</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                           </Grid>
+                        <Grid item>On</Grid>
+                       
+                            <Grid item>
+                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                             </Grid>
+                          <Grid item>Auto</Grid>
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                           
+                    </Grid>
+                    </Typography>
+                          <Typography>
+                            ตั้งค่าความชื้นใน Mode Auto
+                          </Typography>
+                              <Slider
                                    defaultValue={30}
                                    getAriaValueText={valuetext}
                                    aria-labelledby="discrete-slider"
@@ -341,7 +352,76 @@ const useStyles = makeStyles((theme) => ({
                                    max={110}
                                    disabled
                                 />
-
+                               
+                                <TextField
+                                        
+                                        id="time"
+                                        label="ตั้งเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                </FormGroup>
+                
+            </Box>
+           
+        </CardContent>
+      </Card>
+    )
+   }
+   else 
+      return( //todo ถ้าไม่มี state อะไรก็ทำหน้านี้
+        <Card>
+        <CardHeader title= {name}/>
+        <Divider/>
+        <CardContent>
+            <Box
+             sx={{
+              
+             
+            }}
+            >
+                 <FormGroup >
+                 <Typography component="div" >
+                      <Grid component="label" container alignItems="center" spacing={1}>
+                          <Grid item>Off</Grid>
+                          <Grid item>
+                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                           </Grid>
+                        <Grid item>On</Grid>
+                       
+                            <Grid item>
+                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                             </Grid>
+                          <Grid item>Auto</Grid>
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                           
+                    </Grid>
+                    </Typography>
+                          <Typography>
+                            ตั้งค่าความชื้นใน Mode Auto
+                          </Typography>
+                              <Slider
+                                   defaultValue={30}
+                                   getAriaValueText={valuetext}
+                                   aria-labelledby="discrete-slider"
+                                   valueLabelDisplay="auto"
+                                   step={10}
+                                   marks
+                                   min={10}
+                                   max={110}
+                                   disabled
+                                />
+                               
                                 <TextField
                                         disabled
                                         id="time"

@@ -42,9 +42,9 @@ const Register = () => {
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                firstName: Yup.string().max(255).required('User name is required'),
                 password: Yup.string().max(255).required('password is required'),
+                Confirmpassword: Yup.string().max(255).required('Confirm password is required'),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
@@ -81,37 +81,12 @@ const Register = () => {
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
                   helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  label="Username"
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
                   variant="outlined"
                 />
                 <TextField
@@ -123,8 +98,21 @@ const Register = () => {
                   name="password"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="password"
                   value={values.password}
+                  variant="outlined"
+                />
+               
+                <TextField
+                  error={Boolean(touched.Confirmpassword && errors.Confirmpassword)}
+                  fullWidth
+                  helperText={touched.Confirmpassword && errors.Confirmpassword}
+                  label="Confirmpassword"
+                  margin="normal"
+                  name="Confirmpassword"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="Confirmpassword"
+                  value={values.Confirmpassword}
                   variant="outlined"
                 />
                 <Box
