@@ -76,7 +76,7 @@ export default function Register() {
     const HandleSubmit = async e => {
       var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
       if(format.test(value.Username) ){
-           alert("ห้ามมีตัวอักษรพิเศษหรือช่องว่าง")
+           alert("ห้ามมีตัวอักษรพิเศษหรือช่องว่าง2")
       }
       if(format.test(value.Password) ){
         alert("ห้ามมีตัวอักษรพิเศษหรือช่องว่าง")
