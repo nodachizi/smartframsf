@@ -1,4 +1,6 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, BrowserRouter as Router ,Route, Navigate, useNavigate} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -9,19 +11,91 @@ import {
   Grid,
   Link,
   TextField,
+  makeStyles,
+  createStyles,
   Typography
 } from '@material-ui/core';
+import React from 'react';
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
+import axios from 'axios';
 
-const Login = () => {//TODO เปลี่ยร form เขียนเป้นแบบhook
-  const navigate = useNavigate();
+
+
+    const useStyles = makeStyles(() => createStyles({
+      root: {
+        color : 'red',
+        BorderColor: 'red',
+        fontFamily: 'roboto'
+      },
+    }));
   
-  return (
-    <>
-      <Helmet>
-        <title>Login | Material Kit</title>
-      </Helmet>
+   export default function Login() {
+    const classes = useStyles();
+    const navigate = useNavigate();
+    const [value,setValue]=React.useState({
+      Username: "" ,
+      Password: "",
+      CPassword: "",
+      Error: null,
+    });
+    
+    if(localStorage.getItem('user') != null){
+      //Auto Logout
+        localStorage.clear();
+    }
+    
+    
+
+    const HandleSubmit = async e => {
+
+         confirm("Press a button!");
+      if(value.Username == '' ){     
+          alert("Username ไม่สามารถว่าง")
+          window.location.reload();
+        
+        
+      }
+      if(value.Password == ''){
+        alert("Password ไม่สามารถว่าง")
+          window.location.reload();
+      }
+
+      
+      if(value.Username != '' && value.Password != ''){
+
+        const {data} = await axios.post('http://sstwork.thddns.net:7771/smartfarm/verify.php', JSON.stringify({
+            username: value.Username,
+            password: value.Password,
+          }));
+          console.log({data}.data);
+
+          if({data}.data.error =='Wrong Username or Password'){
+            alert("Username หรือ Password ไม่ถูกต้อง")
+              window.location.reload();
+          }
+
+          else {
+            alert({data}.data.error)
+            localStorage.setItem('user',{data}.data.username)
+            navigate('/app/dashboard', { replace: true });
+          }
+         
+         
+      }
+     
+
+     
+    }
+
+    return (
+
+      //-----------------------------------
+
+
+      //-----------------------------------
+    
+      
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -29,64 +103,67 @@ const Login = () => {//TODO เปลี่ยร form เขียนเป้�
           flexDirection: 'column',
           height: '100%',
           justifyContent: 'center'
+          
         }}
+        
       >
         <Container maxWidth="sm">
-          <Formik
-            initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
-            }}
-            validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
-            })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
-            }) => (
-              <form onSubmit={handleSubmit}>
-                
-                
-                <TextField
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
-                  variant="outlined"
+            
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                  
+                >
+                  Username  
+                </Typography>
+                <TextField 
+                 //todo ใส่ username
+                label="" 
+                value={value.Username} 
+                fullWidth
+                onChange={e => setValue(
+                  {
+                  Username: e.target.value,
+                  Password: value.Password,
+                  CPassword: value.COPassword,
+                  Error: null,
+                  //ด้านล่างลบออกเมื่อไม่ใช้
+                  id: null,
+                  pass: null,
+                  }
+                  )}  
+               
                 />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  variant="outlined"
+
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                >
+                  Password
+                </Typography>
+                <TextField 
+                //todo password
+                type="password"
+                value={value.Password} 
+                fullWidth
+                onChange={e => setValue(
+                  {
+                  Username: value.Username ,
+                  Password: e.target.value,
+                  COPassword: value.COPassword,
+                  Error: null,
+                  //ด้านล่างลบออกเมื่อไม่ใช้
+                  id: null,
+                  pass: null,
+                  }
+                  )}  
+               
                 />
-                <Box sx={{ py: 2 }}>
+                
+ 
+                  <Box sx={{ py: 2 }} onClick={HandleSubmit}> //todo ปุ่ม sign up
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
@@ -95,11 +172,52 @@ const Login = () => {//TODO เปลี่ยร form เขียนเป้�
                     Sign in now
                   </Button>
                 </Box>
+                
+                <Typography
+                  color="textSecondary"
+                  variant="body1"
+                  
+                >
+                 ล็อกอินด้วยการใส่โค้ด
+                  
+                </Typography>
+               
+                <TextField 
+                //todo ใส่ password ซ้ำ
+                     value={value.COPassword} 
+                     fullWidth
+                     onChange={e => setValue(
+                  {
+                  Username: value.Username ,
+                  Password: value.Password,
+                  COPassword: e.target.value,
+                  
+                  //ด้านล่างลบออกเมื่อไม่ใช้
+                  id: null,
+                  pass: null,
+                  }
+                  )}  
+               
+                />
+                
+                
+                
+                <Box sx={{ py: 2 }} onClick={HandleSubmit}> //todo ปุ่ม sign up
+                  <Button
+                    color="primary"
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    submit
+                  </Button>
+                </Box>
                 <Typography
                   color="textSecondary"
                   variant="body1"
                 >
-                  Don&apos;t have an account?
+                  Do you have an account?
                   {' '}
                   <Link
                     component={RouterLink}
@@ -109,13 +227,10 @@ const Login = () => {//TODO เปลี่ยร form เขียนเป้�
                     Sign up
                   </Link>
                 </Typography>
-              </form>
-            )}
-          </Formik>
+               
+               
         </Container>
       </Box>
-    </>
-  );
-};
-
-export default Login;
+    
+  )
+   }

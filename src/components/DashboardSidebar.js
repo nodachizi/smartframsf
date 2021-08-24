@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useEffect ,useState} from 'react';
+import { Link as RouterLink, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -25,12 +25,6 @@ import {RiPlantFill as Plantfill,} from 'react-icons/ri'
 import {BiAlarm as Alarm} from 'react-icons/bi'
 
 import NavItem from './NavItem';
-
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'ทดสอบระบบ',
-  name: 'yareyaredaze'
-};
 
 const items = [
   {
@@ -61,9 +55,9 @@ const items = [
   {
     href: '/login',
     icon: LockIcon,
-    title: 'Login'
+    title: 'Logout'
   },
-  {
+  /*{
     href: '/register',
     icon: UserPlusIcon,
     title: 'Register'
@@ -72,16 +66,27 @@ const items = [
     href: '/404',
     icon: AlertCircleIcon,
     title: 'Error'
-  }
+  }*/
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const [user,setUser] = useState({
+  avatar: '/static/images/avatars/avatar_6.png',
+  jobTitle: 'ทดสอบระบบ',
+  name: localStorage.getItem('user')
+});
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
+    if(user.name == null){
+      setUser({
+                  avatar: '/static/images/avatars/avatar_6.png',
+                  jobTitle: 'ทดสอบระบบ',
+                  name: localStorage.getItem('user')
+                  })}
   }, [location.pathname]);
 
   const content = (

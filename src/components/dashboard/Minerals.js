@@ -10,14 +10,13 @@ import {
   useTheme
 } from '@material-ui/core';
 
-
-const Minerals = (props) => {
+export default function Minerals ( {Ndata,Pdata,Kdata} ){
   const theme = useTheme();
 
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: [Ndata, Pdata, Kdata],
         backgroundColor: [
           colors.indigo[500],
           colors.red[600],
@@ -28,7 +27,7 @@ const Minerals = (props) => {
         hoverBorderColor: colors.common.white
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['Nitrogen', 'Phosphorus', 'Potassium']
   };
 
   const options = {
@@ -56,23 +55,23 @@ const Minerals = (props) => {
   const devices = [
     {
       title: 'ไนโตรเจน',
-      value: 63,
+      value: Ndata,
       color: colors.indigo[500]
     },
     {
       title: 'ฟอสฟอรัส',
-      value: 15,
+      value: Pdata,
       color: colors.red[600]
     },
     {
       title: 'โพแทสเซียม',
-      value: 23,
+      value: Kdata,
       color: colors.orange[600]
     }
   ];
 
-  return (
-    <Card {...props}>
+  return(
+    <Card >
       <CardHeader title="แร่ธาตุในดิน"  />
       <Divider />
       <CardContent>
@@ -114,17 +113,15 @@ const Minerals = (props) => {
               </Typography>
               <Typography
                 style={{ color }}
-                variant="h2"
+                variant="h4"
               >
                 {value}
-                %
+                mg/kg
               </Typography>
             </Box>
           ))}
         </Box>
       </CardContent>
     </Card>
-  );
-};
-
-export default Minerals;
+    )
+}

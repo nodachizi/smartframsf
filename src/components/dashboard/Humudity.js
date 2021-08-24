@@ -11,13 +11,11 @@ import MoneyIcon from '@material-ui/icons/Money';
 import { blue } from '@material-ui/core/colors';
 import OpacityIcon from '@material-ui/icons/Opacity';
 
-
-const Humudity = (props) => (
-  
- 
-  <Card
+export default function Humudity ( {data} ){
+  const value = parseInt(data)/10
+  return(
+    <Card
     sx={{ height: '100%' }}
-    {...props}
   >
     <CardContent>
       <Grid
@@ -35,9 +33,9 @@ const Humudity = (props) => (
           </Typography>
           <Typography
             color="textPrimary"
-            variant="h3"
+            variant="h4"
           >
-            9999
+            {value} %
           </Typography>
           
         </Grid>
@@ -56,6 +54,5 @@ const Humudity = (props) => (
       
     </CardContent>
   </Card>
-);
-
-export default Humudity;
+  )
+}

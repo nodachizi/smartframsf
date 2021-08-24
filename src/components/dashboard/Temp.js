@@ -9,8 +9,10 @@ import { indigo } from '@material-ui/core/colors';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import {FaTemperatureHigh} from 'react-icons/fa'
 
-const Temp = (props) => (
-  <Card {...props}>
+export default function Temp ( {data} ){
+  const value = parseInt(data)/10
+  return(
+    <Card >
     <CardContent>
       <Grid
         container
@@ -29,7 +31,7 @@ const Temp = (props) => (
            color="textPrimary"
            variant="h3"
           >
-            26 ํ
+            {value} ํ
           </Typography>
         </Grid>
         <Grid item>
@@ -44,8 +46,10 @@ const Temp = (props) => (
           </Avatar>
         </Grid>
       </Grid>
+      <Box sx={{ pt: 3 }}>
+        
+      </Box>
     </CardContent>
   </Card>
-);
-
-export default Temp;
+  )
+}

@@ -10,10 +10,11 @@ import {
 import { orange } from '@material-ui/core/colors';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
 
-const PH = (props) => (
-  <Card
+export default function Humudity ( {data} ){
+  const value = parseInt(data)/100
+  return(
+    <Card
     sx={{ height: '100%' }}
-    {...props}
   >
     <CardContent>
       <Grid
@@ -33,7 +34,7 @@ const PH = (props) => (
             color="textPrimary"
             variant="h3"
           >
-            75.5%
+            {value}
           </Typography>
         </Grid>
         <Grid item>
@@ -49,13 +50,9 @@ const PH = (props) => (
         </Grid>
       </Grid>
       <Box sx={{ pt: 3 }}>
-        <LinearProgress
-          value={75.5}
-          variant="determinate"
-        />
+        
       </Box>
     </CardContent>
   </Card>
-);
-
-export default PH;
+  )
+}

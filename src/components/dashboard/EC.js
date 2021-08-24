@@ -11,8 +11,11 @@ import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-const EC = (props) => (
-  <Card {...props}>
+
+export default function EC ( {data} ){
+  const value = parseInt(data)
+  return(
+    <Card >
     <CardContent>
       <Grid
         container
@@ -29,9 +32,9 @@ const EC = (props) => (
           </Typography>
           <Typography
             color="textPrimary"
-            variant="h3"
+            variant="h4"
           >
-            1,600
+            {value}
           </Typography>
           <Typography>
           (µS/cm)
@@ -52,6 +55,5 @@ const EC = (props) => (
       
     </CardContent>
   </Card>
-);
-
-export default EC;
+  )
+}

@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
- export default function CustomerListToolbar ({unit,setUnit})  {
+ export default function CustomerListToolbar ()  {
   
   const classes = useStyles();
    //todo ตั่้งค่าปุ่มสวิช
@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
   
   
  
-  const name =`relaynumber${unit.i}`
+ 
  
 
   
@@ -170,7 +170,8 @@ const useStyles = makeStyles((theme) => ({
     if(session.onoff == "enable"){ //todo ถ้ากด sw on/off แสดงหน้านี้
       return(
         <Card>
-        <CardHeader title= {name}/>
+        <CardHeader title= "relay"/>
+          
         <Divider/>
         <CardContent>
             <Box
@@ -188,17 +189,24 @@ const useStyles = makeStyles((theme) => ({
                            </Grid>
                         <Grid item>On</Grid>
                        
+                            
+                           
+                    </Grid>
+                    <br></br>
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                           <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                       
                             <Grid item>
                             <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
                              </Grid>
                           <Grid item>Auto</Grid>
                           <Grid item>
-                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
-                             </Grid>
-                          <Grid item>Timer</Grid>
-                           
+                          <TextField id="standard-secondary" label="Standard secondary" color="secondary"  size="small"/>
+                          </Grid>
+                          
+                          
                     </Grid>
-                    </Typography>
+                    <br></br>
                           <Typography>
                             ตั้งค่าความชื้นใน Mode Auto
                           </Typography>
@@ -213,11 +221,26 @@ const useStyles = makeStyles((theme) => ({
                                    max={110}
                                    disabled
                                 />
-                               
-                                <TextField
-                                        disabled
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+              
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                          
+                           
+                    </Grid>
+                    <br></br>
+                    </Typography>
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+              
+                          <Grid item>
+                          <TextField
+                                        
                                         id="time"
-                                        label="ตั้งเวลาการทำงาน"
+                                        label="ตั้งเปิดเวลาการทำงาน"
                                         type="time"
                                         defaultValue="07:30"
                                         className={classes.textField}
@@ -228,8 +251,37 @@ const useStyles = makeStyles((theme) => ({
                                           step: 300, // 5 min
                                         }}
                                       />
+                             </Grid>
+                             <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                             <Grid item>
+                          <TextField
+                                        
+                                        id="time"
+                                        label="ตั้งปิดเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                             </Grid>
+                         
+                          
+                           
+                    </Grid>
+                               
                 </FormGroup>
-                
+                <br></br> &nbsp; &nbsp; &nbsp;&nbsp;
+                <Button 
+                  size ="medium"
+                  variant="contained"
+                  color="secondary">
+                 Save
+                </Button>
             </Box>
            
         </CardContent>
@@ -240,145 +292,250 @@ const useStyles = makeStyles((theme) => ({
    if(session.Auto == "enable"){ //todo ถ้ากด sw auto แสดงหน้านี้
     return(
       <Card>
-        <CardHeader title= {name}/>
-        <Divider/>
-        <CardContent>
-            <Box
-             sx={{
-              
-             
-            }}
-            >
-                 <FormGroup >
-                 <Typography component="div" >
-                      <Grid component="label" container alignItems="center" spacing={1}>
-                          <Grid item>Off</Grid>
-                          <Grid item>
-                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
-                           </Grid>
-                        <Grid item>On</Grid>
-                       
-                            <Grid item>
-                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
-                             </Grid>
-                          <Grid item>Auto</Grid>
-                          <Grid item>
-                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
-                             </Grid>
-                          <Grid item>Timer</Grid>
-                           
-                    </Grid>
-                    </Typography>
-                          <Typography>
-                            ตั้งค่าความชื้นใน Mode Auto
-                          </Typography>
-                              <Slider
-                                   defaultValue={30}
-                                   getAriaValueText={valuetext}
-                                   aria-labelledby="discrete-slider"
-                                   valueLabelDisplay="auto"
-                                   step={10}
-                                   marks
-                                   min={10}
-                                   max={110}
-                                   
-                                />
-                               
-                                <TextField
-                                        disabled
-                                        id="time"
-                                        label="ตั้งเวลาการทำงาน"
-                                        type="time"
-                                        defaultValue="07:30"
-                                        className={classes.textField}
-                                        InputLabelProps={{
-                                          shrink: true,
-                                        }}
-                                        inputProps={{
-                                          step: 300, // 5 min
-                                        }}
-                                      />
-                </FormGroup>
-                
-            </Box>
+      <CardHeader title= "relay"/>
+        
+      <Divider/>
+      <CardContent>
+          <Box
+           sx={{
+            
            
-        </CardContent>
-      </Card>
+          }}
+          >
+               <FormGroup >
+               <Typography component="div" >
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>Off</Grid>
+                        <Grid item>
+                        <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                         </Grid>
+                      <Grid item>On</Grid>
+                     
+                          
+                         
+                  </Grid>
+                  <br></br>
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                         <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                     
+                          <Grid item>
+                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                           </Grid>
+                        <Grid item>Auto</Grid>
+                        <Grid item>
+                        <TextField id="standard-secondary" label="Standard secondary" color="secondary"  size="small"/>
+                        </Grid>
+                        
+                        
+                  </Grid>
+                  <br></br>
+                        <Typography>
+                          ตั้งค่าความชื้นใน Mode Auto
+                        </Typography>
+                            <Slider
+                                 defaultValue={30}
+                                 getAriaValueText={valuetext}
+                                 aria-labelledby="discrete-slider"
+                                 valueLabelDisplay="auto"
+                                 step={10}
+                                 marks
+                                 min={10}
+                                 max={110}
+                                 
+                              />
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                      <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+            
+                        <Grid item>
+                          <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                           </Grid>
+                        <Grid item>Timer</Grid>
+                        
+                         
+                  </Grid>
+                  <br></br>
+                  </Typography>
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                      <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+            
+                        <Grid item>
+                        <TextField
+                                      
+                                      id="time"
+                                      label="ตั้งเปิดเวลาการทำงาน"
+                                      type="time"
+                                      defaultValue="07:30"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min
+                                      }}
+                                    />
+                           </Grid>
+                           <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                           <Grid item>
+                        <TextField
+                                      
+                                      id="time"
+                                      label="ตั้งปิดเวลาการทำงาน"
+                                      type="time"
+                                      defaultValue="07:30"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min
+                                      }}
+                                    />
+                           </Grid>
+                       
+                        
+                         
+                  </Grid>
+                             
+              </FormGroup>
+              <br></br>&nbsp; &nbsp; &nbsp;&nbsp;
+              <Button 
+                size ="medium"
+                variant="contained"
+                color="secondary">
+               Save
+              </Button>
+          </Box>
+         
+      </CardContent>
+    </Card>
     )
    }
    if(session.Timer == "enable"){ //todo ถ้ากด sw ตั้งเวลาจะทำงาน
     return(
       <Card>
-        <CardHeader title= {name}/>
-        <Divider/>
-        <CardContent>
-            <Box
-             sx={{
-              
-             
-            }}
-            >
-                 <FormGroup >
-                 <Typography component="div" >
-                      <Grid component="label" container alignItems="center" spacing={1}>
-                          <Grid item>Off</Grid>
-                          <Grid item>
-                          <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
-                           </Grid>
-                        <Grid item>On</Grid>
-                       
-                            <Grid item>
-                            <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
-                             </Grid>
-                          <Grid item>Auto</Grid>
-                          <Grid item>
-                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
-                             </Grid>
-                          <Grid item>Timer</Grid>
-                           
-                    </Grid>
-                    </Typography>
-                          <Typography>
-                            ตั้งค่าความชื้นใน Mode Auto
-                          </Typography>
-                              <Slider
-                                   defaultValue={30}
-                                   getAriaValueText={valuetext}
-                                   aria-labelledby="discrete-slider"
-                                   valueLabelDisplay="auto"
-                                   step={10}
-                                   marks
-                                   min={10}
-                                   max={110}
-                                   disabled
-                                />
-                               
-                                <TextField
-                                        
-                                        id="time"
-                                        label="ตั้งเวลาการทำงาน"
-                                        type="time"
-                                        defaultValue="07:30"
-                                        className={classes.textField}
-                                        InputLabelProps={{
-                                          shrink: true,
-                                        }}
-                                        inputProps={{
-                                          step: 300, // 5 min
-                                        }}
-                                      />
-                </FormGroup>
-                
-            </Box>
+      <CardHeader title= "relay"/>
+        
+      <Divider/>
+      <CardContent>
+          <Box
+           sx={{
+            
            
-        </CardContent>
-      </Card>
+          }}
+          >
+               <FormGroup >
+               <Typography component="div" >
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>Off</Grid>
+                        <Grid item>
+                        <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                         </Grid>
+                      <Grid item>On</Grid>
+                     
+                          
+                         
+                  </Grid>
+                  <br></br>
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                         <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                     
+                          <Grid item>
+                          <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
+                           </Grid>
+                        <Grid item>Auto</Grid>
+                        <Grid item>
+                        <TextField id="standard-secondary" label="Standard secondary" color="secondary"  size="small"/>
+                        </Grid>
+                        
+                        
+                  </Grid>
+                  <br></br>
+                        <Typography>
+                          ตั้งค่าความชื้นใน Mode Auto
+                        </Typography>
+                            <Slider
+                                 defaultValue={30}
+                                 getAriaValueText={valuetext}
+                                 aria-labelledby="discrete-slider"
+                                 valueLabelDisplay="auto"
+                                 step={10}
+                                 marks
+                                 min={10}
+                                 max={110}
+                                 disabled
+                              />
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                      <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+            
+                        <Grid item>
+                          <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                           </Grid>
+                        <Grid item>Timer</Grid>
+                        
+                         
+                  </Grid>
+                  <br></br>
+                  </Typography>
+                  <Grid component="label" container alignItems="center" spacing={1}>
+                      <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+            
+                        <Grid item>
+                        <TextField
+                                      
+                                      id="time"
+                                      label="ตั้งเปิดเวลาการทำงาน"
+                                      type="time"
+                                      defaultValue="07:30"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min
+                                      }}
+                                    />
+                           </Grid>
+                           <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                           <Grid item>
+                        <TextField
+                                      
+                                      id="time"
+                                      label="ตั้งปิดเวลาการทำงาน"
+                                      type="time"
+                                      defaultValue="07:30"
+                                      className={classes.textField}
+                                      InputLabelProps={{
+                                        shrink: true,
+                                      }}
+                                      inputProps={{
+                                        step: 300, // 5 min
+                                      }}
+                                    />
+                           </Grid>
+                       
+                        
+                         
+                  </Grid>
+                             
+              </FormGroup>
+              <br></br>&nbsp; &nbsp; &nbsp;&nbsp;
+              <Button 
+                size ="medium"
+                variant="contained"
+                color="secondary">
+               Save
+              </Button>
+          </Box>
+         
+      </CardContent>
+    </Card>
     )
    }
    else 
       return( //todo ถ้าไม่มี state อะไรก็ทำหน้านี้
         <Card>
-        <CardHeader title= {name}/>
+        <CardHeader title= "relay"/>
+          
         <Divider/>
         <CardContent>
             <Box
@@ -396,17 +553,24 @@ const useStyles = makeStyles((theme) => ({
                            </Grid>
                         <Grid item>On</Grid>
                        
+                            
+                           
+                    </Grid>
+                    <br></br>
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                           <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                       
                             <Grid item>
                             <Switch checked={state.checkedB} onChange={handleChange1} name="checkedB" />
                              </Grid>
                           <Grid item>Auto</Grid>
                           <Grid item>
-                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
-                             </Grid>
-                          <Grid item>Timer</Grid>
-                           
+                          <TextField id="standard-secondary" label="Standard secondary" color="secondary"  size="small"/>
+                          </Grid>
+                          
+                          
                     </Grid>
-                    </Typography>
+                    <br></br>
                           <Typography>
                             ตั้งค่าความชื้นใน Mode Auto
                           </Typography>
@@ -421,11 +585,26 @@ const useStyles = makeStyles((theme) => ({
                                    max={110}
                                    disabled
                                 />
-                               
-                                <TextField
-                                        disabled
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+              
+                          <Grid item>
+                            <Switch checked={state.checkedC} onChange={handleChange2} name="checkedC" />
+                             </Grid>
+                          <Grid item>Timer</Grid>
+                          
+                           
+                    </Grid>
+                    <br></br>
+                    </Typography>
+                    <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+              
+                          <Grid item>
+                          <TextField
+                                        
                                         id="time"
-                                        label="ตั้งเวลาการทำงาน"
+                                        label="ตั้งเปิดเวลาการทำงาน"
                                         type="time"
                                         defaultValue="07:30"
                                         className={classes.textField}
@@ -436,8 +615,37 @@ const useStyles = makeStyles((theme) => ({
                                           step: 300, // 5 min
                                         }}
                                       />
+                             </Grid>
+                             <Grid item>  &nbsp; &nbsp; &nbsp; </Grid>
+                             <Grid item>
+                          <TextField
+                                        
+                                        id="time"
+                                        label="ตั้งปิดเวลาการทำงาน"
+                                        type="time"
+                                        defaultValue="07:30"
+                                        className={classes.textField}
+                                        InputLabelProps={{
+                                          shrink: true,
+                                        }}
+                                        inputProps={{
+                                          step: 300, // 5 min
+                                        }}
+                                      />
+                             </Grid>
+                         
+                          
+                           
+                    </Grid>
+                               
                 </FormGroup>
-                
+                <br></br>&nbsp; &nbsp; &nbsp;&nbsp;
+                <Button 
+                  size ="medium"
+                  variant="contained"
+                  color="secondary">
+                 Save
+                </Button>
             </Box>
            
         </CardContent>

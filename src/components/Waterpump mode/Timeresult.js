@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 //import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -38,20 +39,61 @@ import CustomerList from 'src/components/Waterpump mode/CustomerListToolbar';
 
 
 export default function Timeresult () {
-  var i=1;
-  var j=3;
+  const [num,setNum]=React.useState({
+      Number: "",
+    });
+  const [mdata,setMdata]=React.useState({
+      data: null,
+    });
+    const [total,setTotal]=React.useState({
+      Number: 0,
+    });
+    const HandleClick2 = async e => {
+        if(num.Number == ""){
+          alert("SN ไม่สามารถว่างได้")
+        }
+        else{
+        const {data} = await axios.post('http://sstwork.thddns.net:7771/smartfarm/addsn.php', JSON.stringify({
+            user: localStorage.getItem('user'),
+            sn: num.Number,
+            type: "c",
+          }));
+        alert({data}.data.error)
+        window.location.reload(false);
+        }
+      }
+  var i=0;
+  var j=2;
+  var k=6;
   const item=[];
-  const [unit,setUnit]=useState({
-    i: 1,
-    j: 2,
-    mode: 'ทำงานในโหมด Auto',
-
-
-  })
+  
   
 
-  for(i;i<j;i++){
-    item.push(
+  for(i = 0;i< 2;i++){
+    
+       item.push(
+        <Container maxWidth={false}>
+        <p>SN Update ล่าสุดเมื่อ xxx:xxx </p>
+       <Grid
+        container
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="center"
+        spacing={3}
+      > 
+         <Button 
+           size ="medium"
+          variant="contained"
+          
+          color="secondary">
+          Delete
+        </Button>
+      </Grid>
+      </Container>
+      )
+
+      for(j = 0;j<4;j++){
+         item.push(
       
       <Box
       sx={{
@@ -67,11 +109,11 @@ export default function Timeresult () {
           container
           spacing={3}
         >
-         
+           
          <Grid
-                  item
-                 xs={2}
-                >
+              item
+              xs={2}
+              >
                 
                  
                 </Grid>
@@ -83,7 +125,7 @@ export default function Timeresult () {
             <Grid spacing={3}>
            
             </Grid>
-            <CustomerList sx={{ height: '100%' }} unit={unit} setUnit={setUnit} />
+            <CustomerList sx={{ height: '100%' }}  />
           </Grid>
           
           
@@ -91,13 +133,69 @@ export default function Timeresult () {
         </Grid>
       </Container>
     </Box>
-    )
+         )
+      }
+    item.push(
+        <div>
+      <br></br>
+      <p></p>
+      <br></br>
+      <p></p>
+      <br></br>
+      </div>
+
+      )
   }
 
   
   return(
-   
-    <List >{item}</List>
+     <div>
+       <div>
+              <br></br>
+              <br></br>
+             </div>
+            <Grid container >  
+               <Grid item >   </Grid>
+             </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              spacing={3}
+              >
+             
+              <TextField id="filled-basic"
+               size="small"
+               label="Number"
+               variant="filled"
+               //value= {num.Number}
+               margin="dense"
+               onChange={e => setNum(
+                 {
+                   Number: e.target.value
+                 }
+               )}
+                />
+                 <Grid item >   </Grid>
+                <Button 
+                size ="medium"
+                variant="contained"
+                onClick={HandleClick2}
+                color="primary">
+                    submit
+                </Button>
+             
+             <Grid item ><p>  </p> </Grid>
+               
+              </Grid>
+
+              <br></br>
+              <br></br>
+              <br></br>
+        {item}
+     </div>
+    
   )
 }
 

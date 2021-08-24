@@ -1,5 +1,7 @@
-import Humudity from 'src/components/dashboard/Humudity';
+import { Link as RouterLink, BrowserRouter as Router ,Route, Navigate, useNavigate} from 'react-router-dom';
 
+import Humudity from 'src/components/dashboard/Humudity';
+import React, { useEffect } from 'react';
 //import Sales from 'src/components/dashboard//Sales';
 import PH from 'src/components/dashboard/PH';
 import EC from 'src/components/dashboard/EC';
@@ -10,17 +12,72 @@ import {
     Box,
     Container,
     Grid,
-    Typography
+    Typography,
+    TextField,
+    Button
   } from '@material-ui/core';
+import { setNestedObjectValues } from 'formik';
+import axios from 'axios';
 
   export default function Mixi (){
+    const navigate = useNavigate();
+    const [num,setNum]=React.useState({
+      Number: "",
+    });
+    const [mdata,setMdata]=React.useState({
+      data: null,
+    });
+    const [total,setTotal]=React.useState({
+      Number: 0,
+    });
+
+    const HandleClick2 = async e => {
+        if(num.Number == ""){
+          alert("SN ไม่สามารถว่างได้")
+        }
+        else{
+        const {data} = await axios.post('http://sstwork.thddns.net:7771/smartfarm/addsn.php', JSON.stringify({
+            user: localStorage.getItem('user'),
+            sn: num.Number,
+          }));
+        alert({data}.data.error)
+        }
+      }
+
+    const HandleClick = async e => {
+        
+      }
+
+    const getdata = async e => {
+      const {data} = await axios.post('http://sstwork.thddns.net:7771/smartfarm/selectm.php', JSON.stringify({
+            user: localStorage.getItem('user'),
+          }));
+      setMdata({
+        data: {data}.data,
+      });
+      setTotal({
+        Number: {data}.data.lenght,
+      });
+      console.log({data}.data[0]);
+      console.log({data}.data[1]);
+    }
+
+    useEffect(() => {
+      if(total.Number == 0){
+        getdata();
+      }
+    });
+
       var i=0;
-      var j=2;
+      
+
+       // j= parseInt(localStorage.getItem('total'));
       const itep=[];
 
-      for(i=0; i<j ; i++) {
+      for(i=0; i<total.Number ; i++) {
+         
+        
            itep.push(
-            
             <Box
             sx={{
               backgroundColor: 'background.default',
@@ -29,9 +86,26 @@ import {
             }}
           >
             <Container maxWidth={false}>
+                 
                 <Typography>
-                    mk{i}
+                    {mdata.data[i].SN}   Update ล่าสุดเมื่อ {mdata.data[i].update_time}
                 </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  spacing={3}
+                > 
+                   <Button 
+                     size ="medium"
+                    variant="contained"
+                    onClick={HandleClick}
+                    color="secondary">
+                    Delete
+                  </Button>
+                </Grid>
+                <br></br>
               <Grid
                 container
                 spacing={3}
@@ -45,7 +119,7 @@ import {
                   xs={12}
                 >
                 
-                  <Humudity/>
+                  <Humudity data = {mdata.data[i].Humid}/>
                 </Grid>
                 <Grid
                   item
@@ -54,7 +128,7 @@ import {
                   xl={3}
                   xs={12}
                 >
-                  <EC />
+                  <EC data = {mdata.data[i].EC}/>
                 </Grid>
                 <Grid
                   item
@@ -63,7 +137,7 @@ import {
                   xl={3}
                   xs={12}
                 >
-                  <PH />
+                  <PH data = {mdata.data[i].PH}/>
                 </Grid>
                 <Grid
                   item
@@ -72,7 +146,7 @@ import {
                   xl={3}
                   xs={12}
                 >
-                  <Temp sx={{ height: '100%' }} />
+                  <Temp data = {mdata.data[i].Temp} sx={{ height: '100%' }} />
                 </Grid>
                 
                 <Grid
@@ -82,7 +156,7 @@ import {
                   xl={3}
                   xs={12}
                 >
-                  <Minerals sx={{ height: '100%' }} />
+                  <Minerals Ndata = {mdata.data[i].N} Pdata = {mdata.data[i].P} Kdata = {mdata.data[i].K} sx={{ height: '100%' }} />
                 </Grid>
                 <Grid
                 item
@@ -104,7 +178,49 @@ import {
         }
       
         return(
-
-            <li>{itep}</li>
+          <div>
+             <div>
+              <br></br>
+              <br></br>
+             </div>
+            <Grid container >  
+               <Grid item >   </Grid>
+             </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              spacing={3}
+              >
+             
+              <TextField id="filled-basic"
+               size="small"
+               label="Number"
+               variant="filled"
+               value= {num.Number}
+               margin="dense"
+               onChange={e => setNum(
+                 {
+                   Number: e.target.value
+                 }
+               )}
+                />
+                 <Grid item >   </Grid>
+                <Button 
+                size ="medium"
+                variant="contained"
+                onClick={HandleClick2}
+                color="primary">
+                    submit
+                </Button>
+             
+             
+               
+              </Grid>
+              
+            
+              {itep}
+          </div>
       )
   }
